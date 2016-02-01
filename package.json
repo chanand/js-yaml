@@ -1,6 +1,6 @@
 {
   "name": "js-yaml",
-  "version": "3.4.2",
+  "version": "3.5.2",
   "description": "YAML 1.2 parser and serializer",
   "keywords": [
     "yaml",
@@ -9,17 +9,14 @@
     "pyyaml"
   ],
   "homepage": "https://github.com/nodeca/js-yaml",
-  "author": "Dervus Grim <dervus.grim@gmail.com>",
+  "author": "Vladimir Zapparov <dervus.grim@gmail.com>",
   "contributors": [
     "Aleksey V Zapparov <ixti@member.fsf.org> (http://www.ixti.net/)",
     "Vitaly Puzrin <vitaly@rcdesign.ru> (https://github.com/puzrin)",
     "Martin Grenfell <martin.grenfell@gmail.com> (http://got-ravings.blogspot.com)"
   ],
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/nodeca/js-yaml.git"
-  },
+  "repository": "nodeca/js-yaml",
   "files": [
     "index.js",
     "lib/",
@@ -30,16 +27,19 @@
     "js-yaml": "bin/js-yaml.js"
   },
   "dependencies": {
-    "argparse": "~1.0.2",
-    "esprima": "~2.2.0"
+    "argparse": "^1.0.2",
+    "esprima": "^2.6.0"
   },
   "devDependencies": {
     "ansi": "*",
     "benchmark": "*",
+    "browserify": "^13.0.0",
+    "codemirror": "^5.10.0",
     "eslint": "0.24.1",
     "eslint-plugin-nodeca": "^1.0.3",
     "istanbul": "*",
-    "mocha": "*"
+    "mocha": "*",
+    "uglify-js": "^2.6.1"
   },
   "browser": {
     "buffer": false

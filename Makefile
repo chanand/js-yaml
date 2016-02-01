@@ -1,5 +1,3 @@
-PATH        := ./node_modules/.bin:${PATH}
-
 NPM_PACKAGE := $(shell node -e 'process.stdout.write(require("./package.json").name)')
 NPM_VERSION := $(shell node -e 'process.stdout.write(require("./package.json").version)')
 
@@ -17,31 +15,36 @@ help:
 	echo "make lint       - Lint sources with JSHint"
 	echo "make test       - Lint sources and run all tests"
 	echo "make browserify - Build browserified version"
-	echo "make dev-deps   - Install developer dependencies"
 	echo "make gh-pages   - Build and push API docs into gh-pages branch"
 	echo "make publish    - Set new version tag and publish npm package"
 	echo "make todo       - Find and list all TODOs"
 
 
 lint:
-	eslint --reset .
+	./node_modules/.bin/eslint --reset .
 
 
 test: lint
-	@if test ! `which mocha` ; then \
-		echo "You need 'mocha' installed in order to run tests." >&2 ; \
-		echo "  $ make dev-deps" >&2 ; \
-		exit 128 ; \
-		fi
-	NODE_ENV=test mocha -R spec
+	@node -e "require('./bower.json')"
+	@node -e "require('./package.json')"
+	./node_modules/.bin/mocha -R spec
+
+
+demo: lint
+	rm -rf ./demo
+	mkdir ./demo
+	cp ./node_modules/codemirror/lib/codemirror.css ./demo/
+	cp ./support/demo_template/index.html ./demo/
+	cp ./support/demo_template/demo.css ./demo/
+	browserify ./support/demo_template/demo.js -r esprima > ./demo/demo.js
 
 
 coverage:
 	rm -rf coverage
-	istanbul cover node_modules/.bin/_mocha
+	./node_modules/.bin/istanbul cover node_modules/.bin/_mocha
 
 
-gh-pages:
+gh-pages: demo
 	@if test -z ${REMOTE_REPO} ; then \
 		echo 'Remote repo URL not found' >&2 ; \
 		exit 128 ; \
@@ -83,19 +86,17 @@ browserify:
 	mkdir dist
 	# Browserify
 	( echo -n "/* ${NPM_PACKAGE} ${NPM_VERSION} ${GITHUB_PROJ} */" ; \
-		browserify -r ./ -s jsyaml -x esprima \
+		./node_modules/.bin/browserify -r ./ -s jsyaml \
 		) > dist/js-yaml.js
 	# Minify
-	uglifyjs dist/js-yaml.js -c -m \
+	./node_modules/.bin/uglifyjs dist/js-yaml.js -c -m \
 		--preamble "/* ${NPM_PACKAGE} ${NPM_VERSION} ${GITHUB_PROJ} */" \
 		> dist/js-yaml.min.js
-	# Update browser demo
-	cp dist/js-yaml.js demo/js/
 
 
 todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-.PHONY: publish lint test dev-deps gh-pages todo coverage
+.PHONY: publish lint test dev-deps gh-pages todo coverage demo
 .SILENT: help lint test todo coverage
