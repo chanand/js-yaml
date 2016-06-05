@@ -21,7 +21,7 @@ help:
 
 
 lint:
-	./node_modules/.bin/eslint --reset .
+	./node_modules/.bin/eslint .
 
 
 test: lint
@@ -36,7 +36,7 @@ demo: lint
 	cp ./node_modules/codemirror/lib/codemirror.css ./demo/
 	cp ./support/demo_template/index.html ./demo/
 	cp ./support/demo_template/demo.css ./demo/
-	browserify ./support/demo_template/demo.js -r esprima > ./demo/demo.js
+	./node_modules/.bin/browserify ./support/demo_template/demo.js -r esprima > ./demo/demo.js
 
 
 coverage:
@@ -80,8 +80,6 @@ publish:
 
 
 browserify:
-	if test ! `which browserify` ; then npm install browserify ; fi
-	if test ! `which uglifyjs` ; then npm install uglify-js ; fi
 	rm -rf ./dist
 	mkdir dist
 	# Browserify

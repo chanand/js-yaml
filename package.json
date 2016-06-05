@@ -1,6 +1,6 @@
 {
   "name": "js-yaml",
-  "version": "3.5.2",
+  "version": "3.6.1",
   "description": "YAML 1.2 parser and serializer",
   "keywords": [
     "yaml",
@@ -27,22 +27,18 @@
     "js-yaml": "bin/js-yaml.js"
   },
   "dependencies": {
-    "argparse": "^1.0.2",
+    "argparse": "^1.0.7",
     "esprima": "^2.6.0"
   },
   "devDependencies": {
     "ansi": "*",
     "benchmark": "*",
     "browserify": "^13.0.0",
-    "codemirror": "^5.10.0",
-    "eslint": "0.24.1",
-    "eslint-plugin-nodeca": "^1.0.3",
+    "codemirror": "^5.13.4",
+    "eslint": "^2.8.0",
     "istanbul": "*",
     "mocha": "*",
     "uglify-js": "^2.6.1"
-  },
-  "browser": {
-    "buffer": false
   },
   "scripts": {
     "test": "make test"
